@@ -191,7 +191,10 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    data = tbl1.pivot_table(values="_c4",index="_c0",aggfunc=sorted)
+    data['_c4'] = data['_c4'].map(",".join)
+    data = data.reset_index()
+    return data
 
 
 def pregunta_12():
@@ -209,7 +212,12 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    tbl2['_c5b'] = tbl2['_c5b'].map(str)
+    tbl2['_c5'] = tbl2['_c5a'] + ":" + tbl2['_c5b']
+    data = tbl2.pivot_table(values="_c5",index="_c0",aggfunc=sorted)
+    data['_c5'] = data['_c5'].map(",".join)
+    data = data.reset_index()
+    return data
 
 
 def pregunta_13():
@@ -226,4 +234,5 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    data = pd.merge(tbl2,tbl0,on="_c0")
+    return data.groupby('_c1')['_c5b'].sum()
